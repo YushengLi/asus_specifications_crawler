@@ -56,19 +56,24 @@ class ProductCrawler
       # 作業系統
       begin
         @browser.span(class: 'spec-item', text: 'Operating System').element(:xpath => './following-sibling::*').wait_until_present
-      rescue => e
         @browser.screenshot.save "#{Nrb.root}/public/screenshots/#{model_name}_#{DateTime.now.strftime("%Y%m%d%H%M%S")}.png"
+      rescue => e
+        @browser.screenshot.save "#{Nrb.root}/public/screenshots/[Error]_#{model_name}_#{DateTime.now.strftime("%Y%m%d%H%M%S")}.png"
       end
       operating_system = @browser.span(class: 'spec-item', text: 'Operating System').element(:xpath => './following-sibling::*').text rescue nil
       # 光學設備
       optical_device   = @browser.span(class: 'spec-item', text: 'Optical Drive').element(:xpath => './following-sibling::*').text rescue nil
       # 音效
       audio            = @browser.span(class: 'spec-item', text: 'Audio').element(:xpath => './following-sibling::*').text rescue nil
+      # 隨附軟體
+      software         = @browser.span(class: 'spec-item', text: 'Software').element(:xpath => './following-sibling::*').text rescue nil
       Specification.create(
         name: model_name,
         operating_system: operating_system,
         optical_device: optical_device,
         audio: audio,
+        software: software,
+        source_url: @browser.url,
         series: @series
       )
     end

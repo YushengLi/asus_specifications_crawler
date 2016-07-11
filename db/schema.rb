@@ -32,6 +32,8 @@ ActiveRecord::Schema.define(version: 20160709065922) do
     t.text    "operating_system"
     t.text    "optical_device"
     t.text    "audio"
+    t.text    "software"
+    t.text    "source_url"
     t.integer "series_id"
   end
 
